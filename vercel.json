@@ -3,7 +3,19 @@
     "builds": [
       {
         "src": "index.js",
-        "use": "@now/node"
+        "use": "@vercel/node"
+      }
+    ],  
+    "env": {
+      "NODE_ENV": "development",
+      "PASSWORD":"zjop3nANJMQmrddT",
+      "DATABASE":"mongodb+srv://Admin:<password>@cluster0.xc1pk.mongodb.net/orders?retryWrites=true&w=majority",
+      "STRIPE_SECRET_KEY":"sk_test_51KwS9wF3WI0fkr7YhkC6o2p83GD8GiR9RccTz6JxxSf2Bnu3vuE071aNGxM29cyqnQ5fbtoyXoFZRjIWbcsuPZd200PsvZycPL"
+    },
+    "routes": [{"handle": "filesystem"},
+      {
+        "src": "/.*",
+        "dest": "index.js"
       }
     ]
   }

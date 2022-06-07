@@ -21,6 +21,6 @@
     "versal-sdk": "^1.7.1"
   },
   "engines": {
-    "node": "^14"
+    "node": "^14.x"
   }
 }
