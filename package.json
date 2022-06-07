@@ -4,7 +4,7 @@
   "description": "orders service",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,9 @@
     "nodemailer": "^6.7.5",
     "nodemon": "^2.0.16",
     "pug": "^3.0.2",
-    "stripe": "^7.63.1"
+    "stripe": "^7.63.1",
+    "vercel": "^25.0.1",
+    "versal-sdk": "^1.7.1"
   },
   "engines": {
     "node": "^14"
