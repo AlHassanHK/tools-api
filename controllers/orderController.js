@@ -3,6 +3,7 @@ const orders = require("../models/ordersModel");
 const APIFeatures = require("../utils/apiFeatures");
 const Email = require("../utils/email");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const axios = require("axios");
 
 exports.getAll = async (req, res) => {
   try {
@@ -133,28 +134,55 @@ exports.checkoutSession = async (req, res) => {
   try {
     //! 1) find the order
     const order = await orders.findById(req.params.orderId);
-
+    if (!order) throw new Error()
     const totalCount = order.items.reduce(
       (sum, item) => sum + item.itemCount,
       0
     );
 
-    const ids = order.items.map((item) => item.itemId);
+     const ids = order.items.map((item) => item.itemId);
+      
+    // TODO fetch price and names
+    
+    const names = ids.map(async (item) =>{
+      const data  = await axios.get(
+        `https://inventory-service.vercel.app/api/v1/products/${item}`
+      );
+      return pro = data.data.data.name
+      
+    })
+    let nn = ''
+    const values = await Promise.all(names)
+    nn = values.join(' and ')
+    
+   
+   
+   const price = ids.map(async (item) =>{
+    const data  = await axios.get(
+      `https://inventory-service.vercel.app/api/v1/products/${item}`
+    );
+    return pro = data.data.data.price
+  })
+  const valPrice = await Promise.all(price)
+  
+  const pp = valPrice.reduce(
+    (sum, item) => sum + +item,
+    0
+  );
+  console.log(pp)
 
-    // TODO fetch price
-
-    const session = await stripe.checkout.session.create({
+    const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      success_url: `http://localhost:3000/myorder`,
-      cancel_url: `http://localhost:3000/`,
-
+      success_url: `${req.protocol}://${req.get('host')}/buy=true`,
+      cancel_url: `${req.protocol}://${req.get('host')}/`,
+      customer_email: "a.abdo.mae@gmail.com", 
       client_reference_id: req.params.orderId,
       line_items: [
         {
-          name: `${order._id}`,
-          amount: 800,
+          name: `${pp}`,
+          amount: 70*100,
           currency: "usd",
-          quantity: `${totalCount}`,
+          quantity: `1`,
         },
       ],
     });
@@ -166,7 +194,7 @@ exports.checkoutSession = async (req, res) => {
   } catch (error) {
     res.status(404).json({
       status: "failed",
-      message: err.message,
+      message: error,
     });
   }
 };
