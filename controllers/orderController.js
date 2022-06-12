@@ -162,23 +162,23 @@ exports.checkoutSession = async (req, res) => {
   })
   const valPrice = await Promise.all(price)
   
-  const pp = valPrice.reduce(
+  const gg = valPrice.reduce(
     (sum, item) => sum + +item,
     0
   );
-  console.log(pp)
+  const pp = gg*100
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      success_url: `${req.protocol}://${req.get('host')}/buy=true`,
-      cancel_url: `${req.protocol}://${req.get('host')}/`,
+      success_url: "http://localhost:3000/buy=true",
+      cancel_url: "http://localhost:3000/",
       customer_email: "a.abdo.mae@gmail.com", 
       client_reference_id: req.params.orderId,
       line_items: [
         {
           name: `${nn}`,
           amount: `${pp}`,
-          currency: "usd",
+          currency: "egp",
           quantity: `1`,
         },
       ],
