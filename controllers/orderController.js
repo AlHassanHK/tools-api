@@ -169,7 +169,6 @@ exports.checkoutSession = async (req, res) => {
     (sum, item) => sum + +item,
     0
   );
-  console.log(pp)
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
