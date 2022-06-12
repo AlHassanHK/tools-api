@@ -132,7 +132,6 @@ exports.getOrderStatus = async (req, res) => {
 
 exports.checkoutSession = async (req, res) => {
   try {
-    //! 1) find the order
     const order = await orders.findById(req.params.orderId);
     if (!order) throw new Error()
     const totalCount = order.items.reduce(
@@ -141,9 +140,7 @@ exports.checkoutSession = async (req, res) => {
     );
 
      const ids = order.items.map((item) => item.itemId);
-      
-    // TODO fetch price and names
-    
+          
     const names = ids.map(async (item) =>{
       const data  = await axios.get(
         `https://inventory-service.vercel.app/api/v1/products/${item}`
@@ -180,7 +177,7 @@ exports.checkoutSession = async (req, res) => {
       line_items: [
         {
           name: `${nn}`,
-          amount: 70*100,
+          amount: `${pp}`,
           currency: "usd",
           quantity: `1`,
         },
