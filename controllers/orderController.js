@@ -179,8 +179,8 @@ exports.checkoutSession = async (req, res) => {
       client_reference_id: req.params.orderId,
       line_items: [
         {
-          name: `${pp}`,
-          amount: 70*100,
+          name: `${nn}`,
+          amount: `${pp}`,
           currency: "usd",
           quantity: `1`,
         },
