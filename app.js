@@ -1,5 +1,4 @@
-//! security routes middlewares
-const groceries = require("./models/ordersModel");
+const tools = require("./models/toolsModel");
 const express = require("express");
 const app = express();
 
@@ -18,21 +17,21 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/groceries", async (req, res) => {
+app.get("/tools", async (req, res) => {
   try {
-    const allGroceries = await groceries.find();
-    res.status(200).json({ data: allGroceries });
+    const allTools = await tools.find();
+    res.status(200).json({ data: allTools });
   } catch (error) {
     res.status(400).send(error.message);
   }
 });
 
-app.post("/createGroceryItem", async (req, res) => {
+app.post("/createTool", async (req, res) => {
   try {
-    const newGroceryItem = await groceries.create(req.body);
+    const newTool = await tools.create(req.body);
     res.status(201).json({
       status: "Successfully created item.",
-      data: { newGroceryItem }
+      data: { newTool }
     });
   } catch (error) {
     res.status(400).send(error.message);

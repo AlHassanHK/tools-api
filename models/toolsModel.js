@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const groceriesSchema = new mongoose.Schema({
+const toolSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -9,17 +9,17 @@ const groceriesSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  size: {
+  weight: {
     type: String,
     required: true
   },
-  colour: {
-    type: String,
+  isPoweredTool: {
+    type: Boolean,
     required: true
   }
 });
 
 
-const groceries = mongoose.model("groceries", groceriesSchema);
+const tools = mongoose.model("tools", toolSchema);
 
-module.exports = groceries;
+module.exports = tools;
