@@ -1,37 +1,25 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const orderItemSchema = new mongoose.Schema({
-    itemId: {
-        type: mongoose.Types.ObjectId,
-        ref:'products',
-        required: true
-    },
-    itemCount: {
-        type: Number,
-        required: true
-    }
-}, {  _id: false })
-
-const orderSchema = new mongoose.Schema({
-    orderStatus:{
-        type: String,
-        required: true, 
-        default: "CREATED"
-    },
-    items: {
-        type: [orderItemSchema],
-        required: true
-    }
+const groceriesSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  size: {
+    type: String,
+    required: true
+  },
+  colour: {
+    type: String,
+    required: true
+  }
 });
 
-orderSchema.pre(/^find/, function(next){
-    this.populate('items')
 
-    next();
-})
+const groceries = mongoose.model("groceries", groceriesSchema);
 
-//! add validators
-const order = mongoose.model('orders' , orderSchema);
-
-
-module.exports = order;
+module.exports = groceries;
