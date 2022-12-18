@@ -38,4 +38,40 @@ app.post("/createTool", async (req, res) => {
   }
 });
 
+app.patch("/:id", async (req, res) => {
+  try {
+    const newData = await tools.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: newData
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "failed",
+      message: err.message
+    });
+  }
+});
+
+app.delete("/:id"){
+  async (req, res) => {
+    try {
+      await tools.findByIdAndDelete(req.params.id);
+  
+      res.status(200).json({
+        status: "success",
+        data: "data deleted successfully"
+      });
+    } catch (err) {
+      res.status(404).json({
+        status: "failed",
+        message: err.message
+      });
+    }
+  };
+}
 module.exports = app;
